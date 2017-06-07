@@ -122,9 +122,9 @@
 		var wrap = $(this).addClass('camera_wrap');
 
 		wrap.wrapInner(
-			'<div class="camera_src" />'
+			'<div class="camera_src"></div>'
 		).wrapInner(
-			'<div class="camera_fakehover" />'
+			'<div class="camera_fakehover"></div>'
 		);
 
 		var fakeHover = $('.camera_fakehover', wrap);
@@ -180,19 +180,19 @@
 
 		if (opts.thumbnails == true) {
 			wrap.append(
-				'<div class="camera_thumbs_cont" />'
+				'<div class="camera_thumbs_cont"></div>'
 			);
 		}
 
 		if (opts.thumbnails == true && opts.pagination != true) {
 			$('.camera_thumbs_cont', wrap).wrap(
-				'<div />'
+				'<div></div>'
 			).wrap(
-				'<div class="camera_thumbs" />'
+				'<div class="camera_thumbs"></div>'
 			).wrap(
-				'<div />'
+				'<div></div>'
 			).wrap(
-				'<div class="camera_command_wrap" />'
+				'<div class="camera_command_wrap"></div>'
 			);
 		}
 
@@ -207,7 +207,7 @@
 		);
 
 		$('.camera_caption', wrap).each(function () {
-			$(this).wrapInner('<div />');
+			$(this).wrapInner('<div></div>');
 		});
 
 
@@ -224,16 +224,16 @@
 			thumbs = $('.camera_thumbs_cont', wrap);
 
 
-		var w,
-			h;
+		var w;
+		var h;
 
 
-		var allImg = new Array();
+		var allImg = [];
 		$('> div', elem).each(function () {
 			allImg.push($(this).attr('data-src'));
 		});
 
-		var allLinks = new Array();
+		var allLinks = [];
 		$('> div', elem).each(function () {
 			if ($(this).attr('data-link')) {
 				allLinks.push($(this).attr('data-link'));
@@ -242,7 +242,7 @@
 			}
 		});
 
-		var allTargets = new Array();
+		var allTargets = [];
 		$('> div', elem).each(function () {
 			if ($(this).attr('data-target')) {
 				allTargets.push($(this).attr('data-target'));
@@ -251,7 +251,7 @@
 			}
 		});
 
-		var allPor = new Array();
+		var allPor = [];
 		$('> div', elem).each(function () {
 			if ($(this).attr('data-portrait')) {
 				allPor.push($(this).attr('data-portrait'));
@@ -260,7 +260,7 @@
 			}
 		});
 
-		var allAlign = new Array();
+		var allAlign = [];
 		$('> div', elem).each(function () {
 			if ($(this).attr('data-alignment')) {
 				allAlign.push($(this).attr('data-alignment'));
@@ -270,7 +270,7 @@
 		});
 
 
-		var allThumbs = new Array();
+		var allThumbs = [];
 		$('> div', elem).each(function () {
 			if ($(this).attr('data-thumb')) {
 				allThumbs.push($(this).attr('data-thumb'));
@@ -281,10 +281,10 @@
 
 		var amountSlide = allImg.length;
 
-		$(content).append('<div class="cameraContents" />');
+		$(content).append('<div class="cameraContents"></div>');
 		var loopMove;
 		for (loopMove = 0; loopMove < amountSlide; loopMove++) {
-			$('.cameraContents', content).append('<div class="cameraContent" />');
+			$('.cameraContents', content).append('<div class="cameraContent"></div>');
 			if (allLinks[loopMove] != '') {
 				//only for Wordpress plugin
 				var dataBox = $('> div ', elem).eq(loopMove).attr('data-box');
@@ -304,13 +304,13 @@
 			$(this).appendTo(cont);
 		});
 
-		target.append('<div class="cameraCont" />');
+		target.append('<div class="cameraCont"></div>');
 		var cameraCont = $('.cameraCont', wrap);
 
 
 		var loop;
 		for (loop = 0; loop < amountSlide; loop++) {
-			cameraCont.append('<div class="cameraSlide cameraSlide_' + loop + '" />');
+			cameraCont.append('<div class="cameraSlide cameraSlide_' + loop + '"></div>');
 			var div = $('> div:eq(' + loop + ')', elem);
 			target.find('.cameraSlide_' + loop).clone(div);
 		}
@@ -349,7 +349,7 @@
 		});
 
 
-		cameraCont.append('<div class="cameraSlide cameraSlide_' + loop + '" />');
+		cameraCont.append('<div class="cameraSlide cameraSlide_' + loop + '"></div>');
 
 
 		var started;
@@ -368,7 +368,7 @@
 			if (!elem.hasClass('paused')) {
 				elem.addClass('paused');
 				if ($('.camera_stop', camera_thumbs_wrap).length) {
-					$('.camera_stop', camera_thumbs_wrap).hide()
+					$('.camera_stop', camera_thumbs_wrap).hide();
 					$('.camera_play', camera_thumbs_wrap).show();
 					if (loader != 'none') {
 						$('#' + pieID).hide();
@@ -650,7 +650,7 @@
 		if (elem.length != 0) {
 
 			var selector = $('.cameraSlide', target);
-			selector.wrapInner('<div class="camerarelative" />');
+			selector.wrapInner('<div class="camerarelative"></div>');
 
 			var navSlide;
 
@@ -762,7 +762,7 @@
 				autoAdv = false;
 				elem.addClass('paused');
 				if ($('.camera_stop', camera_thumbs_wrap).length) {
-					$('.camera_stop', camera_thumbs_wrap).hide()
+					$('.camera_stop', camera_thumbs_wrap).hide();
 					$('.camera_play', camera_thumbs_wrap).show();
 					if (loader != 'none') {
 						$('#' + pieID).hide();
@@ -794,7 +794,7 @@
 				$('.camera_target_content', fakeHover).mouseup(function () {
 					autoAdv = false;
 					elem.addClass('paused');
-					$('.camera_stop', camera_thumbs_wrap).hide()
+					$('.camera_stop', camera_thumbs_wrap).hide();
 					$('.camera_play', camera_thumbs_wrap).show();
 					$('#' + pieID).hide();
 				});
@@ -810,7 +810,7 @@
 					autoAdv = false;
 					$('.camera_caption', fakeHover).hide();
 					elem.addClass('paused');
-					$('.camera_stop', camera_thumbs_wrap).hide()
+					$('.camera_stop', camera_thumbs_wrap).hide();
 					$('.camera_play', camera_thumbs_wrap).show();
 					$('#' + pieID).hide();
 				}
@@ -821,6 +821,7 @@
 
 
 		function shuffle(arr) {
+			// todo: unconfuse code
 			for (
 				var j, x, i = arr.length; i;
 				j = parseInt(Math.random() * i),
@@ -834,7 +835,7 @@
 		}
 
 		if (loader != 'pie') {
-			barContainer.append('<span class="camera_bar_cont" />');
+			barContainer.append('<span class="camera_bar_cont"></span>');
 			$('.camera_bar_cont', barContainer)
 				.animate({opacity: opts.loaderOpacity}, 0)
 				.css({
@@ -845,7 +846,7 @@
 					'bottom': 0,
 					'background-color': opts.loaderBgColor
 				})
-				.append('<span id="' + pieID + '" />');
+				.append('<span id="' + pieID + '"></span>');
 			$('#' + pieID).animate({opacity: 0}, 0);
 			var canvas = $('#' + pieID);
 			canvas.css({'position': 'absolute', 'background-color': opts.loaderColor});
@@ -915,7 +916,7 @@
 		}
 
 		if ($(pagination).length) {
-			$(pagination).append('<ul class="camera_pag_ul" />');
+			$(pagination).append('<ul class="camera_pag_ul"></ul>');
 			var li;
 			for (li = 0; li < amountSlide; li++) {
 				$('.camera_pag_ul', wrap).append('<li class="pag_nav_' + li + '" style="position:relative; z-index:1002"><span><span>' + li + '</span></span></li>');
@@ -947,26 +948,27 @@
 		if ($(thumbs).length) {
 			var thumbUrl;
 			if (!$(pagination).length) {
-				$(thumbs).append('<div />');
+				$(thumbs).append('<div></div>');
 				$(thumbs).before('<div class="camera_prevThumbs hideNav"><div></div></div>').before('<div class="camera_nextThumbs hideNav"><div></div></div>');
-				$('> div', thumbs).append('<ul />');
+				$('> div', thumbs).append('<ul></ul>');
 				$.each(allThumbs, function (i, val) {
 					if ($('> div', elem).eq(i).attr('data-thumb') != '') {
-						var thumbUrl = $('> div', elem).eq(i).attr('data-thumb'),
-							newImg = new Image();
+						thumbUrl = $('> div', elem).eq(i).attr('data-thumb');
+						var newImg = new Image(); // fixme correct?
 						newImg.src = thumbUrl;
-						$('ul', thumbs).append('<li class="pix_thumb pix_thumb_' + i + '" />');
+						$('ul', thumbs).append('<li class="pix_thumb pix_thumb_' + i + '"></li>');
 						$('li.pix_thumb_' + i, thumbs).append($(newImg).attr('class', 'camera_thumb'));
 					}
 				});
 			} else {
 				$.each(allThumbs, function (i, val) {
 					if ($('> div', elem).eq(i).attr('data-thumb') != '') {
-						var thumbUrl = $('> div', elem).eq(i).attr('data-thumb'),
-							newImg = new Image();
+						thumbUrl = $('> div', elem).eq(i).attr('data-thumb');
+
+						var newImg = new Image();
 						newImg.src = thumbUrl;
 						$('li.pag_nav_' + i, pagination).append($(newImg).attr('class', 'camera_thumb').css({'position': 'absolute'}).animate({opacity: 0}, 0));
-						$('li.pag_nav_' + i + ' > img', pagination).after('<div class="thumb_arrow" />');
+						$('li.pag_nav_' + i + ' > img', pagination).after('<div class="thumb_arrow"></div>');
 						$('li.pag_nav_' + i + ' > .thumb_arrow', pagination).animate({opacity: 0}, 0);
 					}
 				});
@@ -1156,19 +1158,48 @@
 						$('.camera_loader', wrap).css({'visibility': 'visible'});
 					});
 				}
-				var rows = opts.rows,
-					cols = opts.cols,
-					couples = 1,
-					difference = 0,
-					dataSlideOn,
-					time,
-					transPeriod,
-					fx,
-					easing,
-					randomFx = new Array('simpleFade', 'curtainTopLeft', 'curtainTopRight', 'curtainBottomLeft', 'curtainBottomRight', 'curtainSliceLeft', 'curtainSliceRight', 'blindCurtainTopLeft', 'blindCurtainTopRight', 'blindCurtainBottomLeft', 'blindCurtainBottomRight', 'blindCurtainSliceBottom', 'blindCurtainSliceTop', 'stampede', 'mosaic', 'mosaicReverse', 'mosaicRandom', 'mosaicSpiral', 'mosaicSpiralReverse', 'topLeftBottomRight', 'bottomRightTopLeft', 'bottomLeftTopRight', 'topRightBottomLeft', 'scrollLeft', 'scrollRight', 'scrollTop', 'scrollBottom', 'scrollHorz');
-				marginLeft = 0,
-					marginTop = 0,
-					opacityOnGrid = 0;
+				var rows = opts.rows;
+				var cols = opts.cols;
+				var couples = 1;
+				var difference = 0;
+				var dataSlideOn;
+				var time;
+				var transPeriod;
+				var fx;
+				var easing;
+				var marginLeft = 0;
+				var marginTop = 0;
+				var opacityOnGrid = 0;
+				var randomFx = [
+					'simpleFade',
+					'curtainTopLeft',
+					'curtainTopRight',
+					'curtainBottomLeft',
+					'curtainBottomRight',
+					'curtainSliceLeft',
+					'curtainSliceRight',
+					'blindCurtainTopLeft',
+					'blindCurtainTopRight',
+					'blindCurtainBottomLeft',
+					'blindCurtainBottomRight',
+					'blindCurtainSliceBottom',
+					'blindCurtainSliceTop',
+					'stampede',
+					'mosaic',
+					'mosaicReverse',
+					'mosaicRandom',
+					'mosaicSpiral',
+					'mosaicSpiralReverse',
+					'topLeftBottomRight',
+					'bottomRightTopLeft',
+					'bottomLeftTopRight',
+					'topRightBottomLeft',
+					'scrollLeft',
+					'scrollRight',
+					'scrollTop',
+					'scrollBottom',
+					'scrollHorz'
+				];
 
 				if (opts.opacityOnGrid == true) {
 					opacityOnGrid = 0;
@@ -1193,7 +1224,6 @@
 					fx = shuffle(randomFx);
 					fx = fx[0];
 				} else {
-					fx = fx;
 					if (fx.indexOf(',') > 0) {
 						fx = fx.replace(/ /g, '');
 						fx = fx.split(',');
@@ -1224,7 +1254,7 @@
 					slideOn = dataSlideOn;
 				} else {
 					if (opts.slideOn == 'random') {
-						var slideOn = new Array('next', 'prev');
+						var slideOn = ['next', 'prev'];
 						slideOn = shuffle(slideOn);
 						slideOn = slideOn[0];
 					} else {
@@ -1420,13 +1450,13 @@
 				var addTop;
 				var tAppW = 0;
 				var tAppH = 0;
-				var arr = new Array();
-				var delay = new Array();
-				var order = new Array();
+				var arr = [];
+				var delay = [];
+				var order = [];
 				while (cycle < blocks) {
 					arr.push(cycle);
 					delay.push(cycle);
-					cameraCont.append('<div class="cameraappended" style="display:none; overflow:hidden; position:absolute; z-index:1000" />');
+					cameraCont.append('<div class="cameraappended" style="display:none; overflow:hidden; position:absolute; z-index:1000"></div>');
 					var tApp = $('.cameraappended:eq(' + cycle + ')', target);
 					if (fx == 'scrollLeft' || fx == 'scrollRight' || fx == 'scrollTop' || fx == 'scrollBottom' || fx == 'scrollHorz') {
 						selector.eq(slideI).clone().show().appendTo(tApp);
@@ -1599,7 +1629,7 @@
 					} else {
 						addLeft = 0;
 					}
-					if (value % cols == 0) {
+					if ((value % cols) === 0) {
 						tAppW = 0;
 					}
 					if (Math.floor(value / cols) < topScrap) {
@@ -1964,7 +1994,7 @@
 										if (rad <= 1.002 && !elem.hasClass('stopped') && !elem.hasClass('paused') && !elem.hasClass('hovered')) {
 											rad = (rad + radSum);
 										} else if (rad <= 1 && (elem.hasClass('stopped') || elem.hasClass('paused') || elem.hasClass('stopped') || elem.hasClass('hovered'))) {
-											rad = rad;
+											// VOID
 										} else {
 											if (!elem.hasClass('stopped') && !elem.hasClass('paused') && !elem.hasClass('hovered')) {
 												clearInterval(u);
@@ -2013,7 +2043,7 @@
 										if (rad <= 1.002 && !elem.hasClass('stopped') && !elem.hasClass('paused') && !elem.hasClass('hovered')) {
 											rad = (rad + radSum);
 										} else if (rad <= 1 && (elem.hasClass('stopped') || elem.hasClass('paused') || elem.hasClass('hovered'))) {
-											rad = rad;
+											// VOID
 										} else {
 											if (!elem.hasClass('stopped') && !elem.hasClass('paused') && !elem.hasClass('hovered')) {
 												clearInterval(u);
@@ -2262,7 +2292,7 @@
 
 })(jQuery);
 
-;(function ($) {
+(function ($) {
 	$.fn.cameraStop = function () {
 		var wrap = $(this),
 			elem = $('.camera_src', wrap),
@@ -2276,7 +2306,7 @@
 	}
 })(jQuery);
 
-;(function ($) {
+(function ($) {
 	$.fn.cameraPause = function () {
 		var wrap = $(this);
 		var elem = $('.camera_src', wrap);
@@ -2284,7 +2314,7 @@
 	}
 })(jQuery);
 
-;(function ($) {
+(function ($) {
 	$.fn.cameraResume = function () {
 		var wrap = $(this);
 		var elem = $('.camera_src', wrap);
