@@ -54,7 +54,7 @@
 
 			mobileNavHover: true,	//same as above, but only for mobile devices
 
-			opacityOnGrid: false,	//true, false. Decide to apply a fade effect to blocks and slices: if your slideshow is fullscreen or simply big, I recommend to set it false to have a smoother effect
+			opacityOnGrid: false,	//true, false. Decide to apply a fade effect to blocks and slices: if your slide show is full-screen or simply big, I recommend to set it false to have a smoother effect
 
 			overlayer: true,	//a layer on the images to prevent the users grab them simply by clicking the right button of their mouse (.camera_overlayer)
 
@@ -62,7 +62,7 @@
 
 			playPause: true,	//true or false, to display or not the play/pause buttons
 
-			pauseOnClick: true,	//true, false. It stops the slideshow when you click the sliders.
+			pauseOnClick: true,	//true, false. It stops the slide show when you click the sliders.
 
 			pieDiameter: 38,
 
@@ -80,36 +80,46 @@
 
 			thumbnails: false,
 
-			time: 7000,	//milliseconds between the end of the sliding effect and the start of the nex one
+			time: 7000,	// milliseconds between the end of the sliding effect and the start of the nex one
 
-			transPeriod: 1500,	//lenght of the sliding effect in milliseconds
+			transPeriod: 1500,	// length of the sliding effect in milliseconds
 
-////////callbacks
+			// ============== Callbacks =================
 
-			onEndTransition: function () {
-			},	//this callback is invoked when the transition effect ends
+			/**
+			 * this callback is invoked when the transition effect ends
+			 */
+			onEndTransition: function () {},
 
-			onLoaded: function () {
-			},	//this callback is invoked when the image on a slide has completely loaded
+			/**
+			 * this callback is invoked when the image on a slide has completely loaded
+			 */
+			onLoaded: function () {},
 
-			onStartLoading: function () {
-			},	//this callback is invoked when the image on a slide start loading
+			/**
+			 * this callback is invoked when the image on a slide start loading
+			 */
+			onStartLoading: function () {},
 
-			onStartTransition: function () {
-			}	//this callback is invoked when the transition effect starts
+			/**
+			 * this callback is invoked when the transition effect starts
+			 */
+			onStartTransition: function () {}
 
 		};
 
-
+		/**
+		 *
+		 * @returns {boolean}
+		 */
 		function isMobile() {
-			if (navigator.userAgent.match(/Android/i) ||
+			return !! (
+				navigator.userAgent.match(/Android/i) ||
 				navigator.userAgent.match(/webOS/i) ||
 				navigator.userAgent.match(/iPad/i) ||
 				navigator.userAgent.match(/iPhone/i) ||
 				navigator.userAgent.match(/iPod/i)
-			) {
-				return true;
-			}
+			);
 		}
 
 		$.support.borderRadius = false;
@@ -117,7 +127,7 @@
 			if (document.body.style[this] !== undefined) $.support.borderRadius = true;
 		});
 
-		var opts = $.extend({}, defaults, opts);
+		opts = $.extend({}, defaults, opts);
 
 		var wrap = $(this).addClass('camera_wrap');
 
@@ -128,12 +138,12 @@
 		);
 
 		var fakeHover = $('.camera_fakehover', wrap);
-		var fakeHoverSelector = ('.camera_fakehover', wrap);
+		var fakeHoverSelector = $('.camera_fakehover', wrap);
 
 		fakeHover.append(
 			'<div class="camera_target"></div>'
 		);
-		if (opts.overlayer == true) {
+		if (opts.overlayer === true) {
 			fakeHover.append(
 				'<div class="camera_overlayer"></div>'
 			)
@@ -144,33 +154,33 @@
 
 		var loader;
 
-		if (opts.loader == 'pie' && !$.support.borderRadius) {
+		if (opts.loader === 'pie' && ! $.support.borderRadius) {
 			loader = 'bar';
 		} else {
 			loader = opts.loader;
 		}
 
-		if (loader == 'pie') {
+		if (loader === 'pie') {
 			fakeHover.append(
 				'<div class="camera_pie"></div>'
 			)
-		} else if (loader == 'bar') {
+		} else if (loader === 'bar') {
 			fakeHover.append(
 				'<div class="camera_bar"></div>'
 			)
 		} else {
 			fakeHover.append(
-				'<div class="camera_bar" style="display:none"></div>'
+				'<div class="camera_bar" style="display: none;"></div>'
 			)
 		}
 
-		if (opts.playPause == true) {
+		if (opts.playPause === true) {
 			fakeHover.append(
 				'<div class="camera_commands"></div>'
 			)
 		}
 
-		if (opts.navigation == true) {
+		if (opts.navigation === true) {
 			fakeHover.append(
 				'<div class="camera_prev"><span></span></div>'
 			).append(
@@ -178,13 +188,13 @@
 			);
 		}
 
-		if (opts.thumbnails == true) {
+		if (opts.thumbnails === true) {
 			wrap.append(
 				'<div class="camera_thumbs_cont"></div>'
 			);
 		}
 
-		if (opts.thumbnails == true && opts.pagination != true) {
+		if (opts.thumbnails === true && opts.pagination !== true) {
 			$('.camera_thumbs_cont', wrap).wrap(
 				'<div></div>'
 			).wrap(
@@ -196,7 +206,7 @@
 			);
 		}
 
-		if (opts.pagination == true) {
+		if (opts.pagination === true) {
 			wrap.append(
 				'<div class="camera_pag"></div>'
 			);
@@ -211,21 +221,17 @@
 		});
 
 
-		var pieID = 'pie_' + wrap.index(),
-			elem = $('.camera_src', wrap),
-			target = $('.camera_target', wrap),
-			content = $('.camera_target_content', wrap),
-			pieContainer = $('.camera_pie', wrap),
-			barContainer = $('.camera_bar', wrap),
-			prevNav = $('.camera_prev', wrap),
-			nextNav = $('.camera_next', wrap),
-			commands = $('.camera_commands', wrap),
-			pagination = $('.camera_pag', wrap),
-			thumbs = $('.camera_thumbs_cont', wrap);
-
-
-		var w;
-		var h;
+		var pieID = 'pie_' + wrap.index();
+		var elem = $('.camera_src', wrap);
+		var target = $('.camera_target', wrap);
+		var content = $('.camera_target_content', wrap);
+		var pieContainer = $('.camera_pie', wrap);
+		var barContainer = $('.camera_bar', wrap);
+		var prevNav = $('.camera_prev', wrap);
+		var nextNav = $('.camera_next', wrap);
+		var commands = $('.camera_commands', wrap);
+		var pagination = $('.camera_pag', wrap);
+		var thumbs = $('.camera_thumbs_cont', wrap);
 
 
 		var allImg = [];
@@ -285,10 +291,10 @@
 		var loopMove;
 		for (loopMove = 0; loopMove < amountSlide; loopMove++) {
 			$('.cameraContents', content).append('<div class="cameraContent"></div>');
-			if (allLinks[loopMove] != '') {
-				//only for Wordpress plugin
+			if (allLinks[loopMove] !== '') {
+				// Only for Wordpress Plugin
 				var dataBox = $('> div ', elem).eq(loopMove).attr('data-box');
-				if (typeof dataBox !== 'undefined' && dataBox !== false && dataBox != '') {
+				if (typeof dataBox !== 'undefined' && dataBox !== false && dataBox !== '') {
 					dataBox = 'data-box="' + $('> div ', elem).eq(loopMove).attr('data-box') + '"';
 				} else {
 					dataBox = '';
@@ -348,9 +354,7 @@
 			thumbnailVisible();
 		});
 
-
 		cameraCont.append('<div class="cameraSlide cameraSlide_' + loop + '"></div>');
-
 
 		var started;
 
@@ -361,7 +365,7 @@
 		var setPause;
 
 		$(window).bind('resize pageshow', function () {
-			if (started == true) {
+			if (started === true) {
 				resizeImage();
 			}
 			$('ul', thumbs).animate({'margin-top': 0}, 0, thumbnailPos);
@@ -370,11 +374,11 @@
 				if ($('.camera_stop', camera_thumbs_wrap).length) {
 					$('.camera_stop', camera_thumbs_wrap).hide();
 					$('.camera_play', camera_thumbs_wrap).show();
-					if (loader != 'none') {
+					if (loader !== 'none') {
 						$('#' + pieID).hide();
 					}
 				} else {
-					if (loader != 'none') {
+					if (loader !== 'none') {
 						$('#' + pieID).hide();
 					}
 				}
@@ -384,11 +388,11 @@
 					if ($('.camera_play', camera_thumbs_wrap).length) {
 						$('.camera_play', camera_thumbs_wrap).hide();
 						$('.camera_stop', camera_thumbs_wrap).show();
-						if (loader != 'none') {
+						if (loader !== 'none') {
 							$('#' + pieID).fadeIn();
 						}
 					} else {
-						if (loader != 'none') {
+						if (loader !== 'none') {
 							$('#' + pieID).fadeIn();
 						}
 					}
@@ -401,15 +405,15 @@
 
 			function resizeImageWork() {
 				w = wrap.width();
-				if (opts.height.indexOf('%') != -1) {
+				if (opts.height.indexOf('%') !== -1) {
 					var startH = Math.round(w / (100 / parseFloat(opts.height)));
-					if (opts.minHeight != '' && startH < parseFloat(opts.minHeight)) {
+					if (opts.minHeight !== '' && startH < parseFloat(opts.minHeight)) {
 						h = parseFloat(opts.minHeight);
 					} else {
 						h = startH;
 					}
 					wrap.css({height: h});
-				} else if (opts.height == 'auto') {
+				} else if (opts.height === 'auto') {
 					h = wrap.height();
 				} else {
 					h = parseFloat(opts.height);
@@ -434,10 +438,12 @@
 						portrait = opts.portrait;
 					}
 
-					if (portrait == false || portrait == 'false') {
+					var r;
+					var d;
+					if (portrait === false || portrait === 'false') {
 						if ((wT / hT) < (w / h)) {
-							var r = w / wT;
-							var d = (Math.abs(h - (hT * r))) * 0.5;
+							r = w / wT;
+							d = (Math.abs(h - (hT * r))) * 0.5;
 							switch (alignment) {
 								case 'topLeft':
 									mTop = 0;
@@ -478,8 +484,8 @@
 							});
 						}
 						else {
-							var r = h / hT;
-							var d = (Math.abs(w - (wT * r))) * 0.5;
+							r = h / hT;
+							d = (Math.abs(w - (wT * r))) * 0.5;
 							switch (alignment) {
 								case 'topLeft':
 									mLeft = 0;
@@ -521,8 +527,8 @@
 						}
 					} else {
 						if ((wT / hT) < (w / h)) {
-							var r = h / hT;
-							var d = (Math.abs(w - (wT * r))) * 0.5;
+							r = h / hT;
+							d = (Math.abs(w - (wT * r))) * 0.5;
 							switch (alignment) {
 								case 'topLeft':
 									mLeft = 0;
@@ -563,8 +569,8 @@
 							});
 						}
 						else {
-							var r = w / wT;
-							var d = (Math.abs(h - (hT * r))) * 0.5;
+							r = w / wT;
+							d = (Math.abs(h - (hT * r))) * 0.5;
 							switch (alignment) {
 								case 'topLeft':
 									mTop = 0;
@@ -608,7 +614,7 @@
 				});
 			}
 
-			if (started == true) {
+			if (started === true) {
 				clearTimeout(res);
 				res = setTimeout(resizeImageWork, 200);
 			} else {
@@ -619,45 +625,38 @@
 		}
 
 
-		var u,
-			setT;
+		var u;
+		var setT;
+		var clickEv;
+		var autoAdv;
+		var navHover;
+		var videoHover;
+		var videoPresent;
 
-		var clickEv,
-			autoAdv,
-			navHover,
-			commands,
-			pagination;
-
-		var videoHover,
-			videoPresent;
-
-		if (isMobile() && opts.mobileAutoAdvance != '') {
+		if (isMobile() && opts.mobileAutoAdvance !== '') {
 			autoAdv = opts.mobileAutoAdvance;
 		} else {
 			autoAdv = opts.autoAdvance;
 		}
 
-		if (autoAdv == false) {
+		if (autoAdv === false) {
 			elem.addClass('paused');
 		}
 
-		if (isMobile() && opts.mobileNavHover != '') {
+		if (isMobile() && opts.mobileNavHover !== '') {
 			navHover = opts.mobileNavHover;
 		} else {
 			navHover = opts.navigationHover;
 		}
 
-		if (elem.length != 0) {
+		if (elem.length !== 0) {
 
 			var selector = $('.cameraSlide', target);
 			selector.wrapInner('<div class="camerarelative"></div>');
 
 			var navSlide;
-
 			var barDirection = opts.barDirection;
-
 			var camera_thumbs_wrap = wrap;
-
 
 			$('iframe', fakeHover).each(function () {
 				var t = $(this);
@@ -675,14 +674,14 @@
 					var imgFakeUrl = opts.imagePath + 'blank.gif';
 					var imgFake = new Image();
 					imgFake.src = imgFakeUrl;
-					if (opts.height.indexOf('%') != -1) {
+					if (opts.height.indexOf('%') !== -1) {
 						var startH = Math.round(w / (100 / parseFloat(opts.height)));
-						if (opts.minHeight != '' && startH < parseFloat(opts.minHeight)) {
+						if (opts.minHeight !== '' && startH < parseFloat(opts.minHeight)) {
 							h = parseFloat(opts.minHeight);
 						} else {
 							h = startH;
 						}
-					} else if (opts.height == 'auto') {
+					} else if (opts.height === 'auto') {
 						h = wrap.height();
 					} else {
 						h = parseFloat(opts.height);
@@ -691,16 +690,17 @@
 					var clone = t.clone();
 					t.remove();
 					$(imgFake).bind('click', function () {
-						if ($(this).css('position') == 'absolute') {
+						if ($(this).css('position') === 'absolute') {
 							$(this).remove();
-							if (cloneSrc.indexOf('vimeo') != -1 || cloneSrc.indexOf('youtube') != -1) {
-								if (cloneSrc.indexOf('?') != -1) {
+							var autoplay;
+							if (cloneSrc.indexOf('vimeo') !== -1 || cloneSrc.indexOf('youtube') !== -1) {
+								if (cloneSrc.indexOf('?') !== -1) {
 									autoplay = '&autoplay=1';
 								} else {
 									autoplay = '?autoplay=1';
 								}
-							} else if (cloneSrc.indexOf('dailymotion') != -1) {
-								if (cloneSrc.indexOf('?') != -1) {
+							} else if (cloneSrc.indexOf('dailymotion') !== -1) {
+								if (cloneSrc.indexOf('?') !== -1) {
 									autoplay = '&autoPlay=1';
 								} else {
 									autoplay = '?autoPlay=1';
@@ -715,11 +715,9 @@
 					});
 				});
 			}
-
 			imgFake();
 
-
-			if (opts.hover == true) {
+			if (opts.hover === true) {
 				if (!isMobile()) {
 					fakeHover.hover(function () {
 						elem.addClass('hovered');
@@ -729,7 +727,7 @@
 				}
 			}
 
-			if (navHover == true) {
+			if (navHover === true) {
 				$(prevNav, wrap).animate({opacity: 0}, 0);
 				$(nextNav, wrap).animate({opacity: 0}, 0);
 				$(commands, wrap).animate({opacity: 0}, 0);
@@ -764,11 +762,11 @@
 				if ($('.camera_stop', camera_thumbs_wrap).length) {
 					$('.camera_stop', camera_thumbs_wrap).hide();
 					$('.camera_play', camera_thumbs_wrap).show();
-					if (loader != 'none') {
+					if (loader !== 'none') {
 						$('#' + pieID).hide();
 					}
 				} else {
-					if (loader != 'none') {
+					if (loader !== 'none') {
 						$('#' + pieID).hide();
 					}
 				}
@@ -780,17 +778,17 @@
 				if ($('.camera_play', camera_thumbs_wrap).length) {
 					$('.camera_play', camera_thumbs_wrap).hide();
 					$('.camera_stop', camera_thumbs_wrap).show();
-					if (loader != 'none') {
+					if (loader !== 'none') {
 						$('#' + pieID).show();
 					}
 				} else {
-					if (loader != 'none') {
+					if (loader !== 'none') {
 						$('#' + pieID).show();
 					}
 				}
 			});
 
-			if (opts.pauseOnClick == true) {
+			if (opts.pauseOnClick === true) {
 				$('.camera_target_content', fakeHover).mouseup(function () {
 					autoAdv = false;
 					elem.addClass('paused');
@@ -806,7 +804,7 @@
 			});
 
 			$('.cameraContent, .imgFake', fakeHover).bind('click', function () {
-				if (videoPresent == true && videoHover == true) {
+				if (videoPresent === true && videoHover === true) {
 					autoAdv = false;
 					$('.camera_caption', fakeHover).hide();
 					elem.addClass('paused');
@@ -819,22 +817,37 @@
 
 		}
 
-
+		/**
+		 *
+		 * @param arr
+		 * @returns {*}
+		 */
 		function shuffle(arr) {
-			// todo: unconfuse code
-			for (
-				var j, x, i = arr.length; i;
-				j = parseInt(Math.random() * i),
-					x = arr[--i], arr[i] = arr[j], arr[j] = x
-			);
+			var i = arr.length;
+			var j;
+			var x;
+
+			while(i) {
+				j = parseInt(Math.random() * i);
+				x = arr[--i];
+				arr[i] = arr[j];
+				arr[j] = x;
+			}
+
 			return arr;
 		}
 
+		/**
+		 *
+		 * @param s
+		 * @returns {boolean}
+		 */
 		function isInteger(s) {
-			return Math.ceil(s) == Math.floor(s);
+			return Math.ceil(s) === Math.floor(s);
 		}
 
-		if (loader != 'pie') {
+		var canvas;
+		if (loader !== 'pie') {
 			barContainer.append('<span class="camera_bar_cont"></span>');
 			$('.camera_bar_cont', barContainer)
 				.animate({opacity: opts.loaderOpacity}, 0)
@@ -847,8 +860,9 @@
 					'background-color': opts.loaderBgColor
 				})
 				.append('<span id="' + pieID + '"></span>');
-			$('#' + pieID).animate({opacity: 0}, 0);
-			var canvas = $('#' + pieID);
+			canvas = $('#' + pieID);
+
+			canvas.animate({opacity: 0}, 0);
 			canvas.css({'position': 'absolute', 'background-color': opts.loaderColor});
 			switch (opts.barPosition) {
 				case 'left':
@@ -881,7 +895,7 @@
 		} else {
 			pieContainer.append('<canvas id="' + pieID + '"></canvas>');
 			var G_vmlCanvasManager;
-			var canvas = document.getElementById(pieID);
+			canvas = document.getElementById(pieID);
 			canvas.setAttribute("width", opts.pieDiameter);
 			canvas.setAttribute("height", opts.pieDiameter);
 			var piePosition;
@@ -910,7 +924,7 @@
 			}
 
 		}
-		if (loader == 'none' || autoAdv == false) {
+		if (loader === 'none' || autoAdv === false) {
 			$('#' + pieID).hide();
 			$('.camera_canvas_wrap', camera_thumbs_wrap).hide();
 		}
@@ -919,7 +933,7 @@
 			$(pagination).append('<ul class="camera_pag_ul"></ul>');
 			var li;
 			for (li = 0; li < amountSlide; li++) {
-				$('.camera_pag_ul', wrap).append('<li class="pag_nav_' + li + '" style="position:relative; z-index:1002"><span><span>' + li + '</span></span></li>');
+				$('.camera_pag_ul', wrap).append('<li class="pag_nav_' + li + '" style="position: relative; z-index: 1002"><span><span>' + li + '</span></span></li>');
 			}
 			$('.camera_pag_ul li', wrap).hover(function () {
 				$(this).addClass('camera_hover');
@@ -952,7 +966,7 @@
 				$(thumbs).before('<div class="camera_prevThumbs hideNav"><div></div></div>').before('<div class="camera_nextThumbs hideNav"><div></div></div>');
 				$('> div', thumbs).append('<ul></ul>');
 				$.each(allThumbs, function (i, val) {
-					if ($('> div', elem).eq(i).attr('data-thumb') != '') {
+					if ($('> div', elem).eq(i).attr('data-thumb') !== '') {
 						thumbUrl = $('> div', elem).eq(i).attr('data-thumb');
 						var newImg = new Image(); // fixme correct?
 						newImg.src = thumbUrl;
@@ -962,7 +976,7 @@
 				});
 			} else {
 				$.each(allThumbs, function (i, val) {
-					if ($('> div', elem).eq(i).attr('data-thumb') != '') {
+					if ($('> div', elem).eq(i).attr('data-thumb') !== '') {
 						thumbUrl = $('> div', elem).eq(i).attr('data-thumb');
 
 						var newImg = new Image();
@@ -998,7 +1012,7 @@
 				}
 
 
-				if (firstPos == true) {
+				if (firstPos === true) {
 					$('ul', thumbs).width($('ul > li', thumbs).length * $('ul > li', thumbs).outerWidth());
 					if ($(thumbs).length && !$(pagination).lenght) {
 						wrap.css({marginBottom: $(thumbs).outerHeight()});
@@ -1036,7 +1050,7 @@
 
 		if ($(commands).length) {
 			$(commands).append('<div class="camera_play"></div>').append('<div class="camera_stop"></div>');
-			if (autoAdv == true) {
+			if (autoAdv === true) {
 				$('.camera_play', camera_thumbs_wrap).hide();
 				$('.camera_stop', camera_thumbs_wrap).show();
 			} else {
@@ -1052,7 +1066,7 @@
 			var barWidth = $('.camera_bar_cont', camera_thumbs_wrap).width(),
 				barHeight = $('.camera_bar_cont', camera_thumbs_wrap).height();
 
-			if (loader != 'pie') {
+			if (loader !== 'pie') {
 				switch (barDirection) {
 					case 'leftToRight':
 						$('#' + pieID).css({'right': barWidth});
@@ -1092,19 +1106,20 @@
 
 			videoPresent = false;
 			var vis = parseFloat($('div.cameraSlide.cameracurrent', target).index());
+			var slideI;
 
 			if (navSlide > 0) {
-				var slideI = navSlide - 1;
-			} else if (vis == amountSlide - 1) {
-				var slideI = 0;
+				slideI = navSlide - 1;
+			} else if (vis === (amountSlide - 1)) {
+				slideI = 0;
 			} else {
-				var slideI = vis + 1;
+				slideI = vis + 1;
 			}
 
 
 			var slide = $('.cameraSlide:eq(' + slideI + ')', target);
 			var slideNext = $('.cameraSlide:eq(' + (slideI + 1) + ')', target).addClass('cameranext');
-			if (vis != slideI + 1) {
+			if (vis !== (slideI + 1)) {
 				slideNext.hide();
 			}
 			$('.cameraContent', fakeHover).fadeOut(600);
@@ -1120,7 +1135,8 @@
 				imgLoaded.src = imgUrl + "?" + new Date().getTime();
 				slide.css('visibility', 'hidden');
 				slide.prepend($(imgLoaded).attr('class', 'imgLoaded').css('visibility', 'hidden'));
-				var wT, hT;
+				var wT;
+				var hT;
 				if (!$(imgLoaded).get(0).complete || wT == '0' || hT == '0' || typeof wT === 'undefined' || wT === false || typeof hT === 'undefined' || hT === false) {
 					$('.camera_loader', wrap).delay(500).fadeIn(400);
 					imgLoaded.onload = function () {
@@ -1135,7 +1151,7 @@
 					};
 				}
 			} else {
-				if (allImg.length > (slideI + 1) && !$('.imgLoaded', slideNext).length) {
+				if (allImg.length > (slideI + 1) && ! $('.imgLoaded', slideNext).length) {
 					var imgUrl2 = allImg[(slideI + 1)];
 					var imgLoaded2 = new Image();
 					imgLoaded2.src = imgUrl2 + "?" + new Date().getTime();
@@ -1201,7 +1217,7 @@
 					'scrollHorz'
 				];
 
-				if (opts.opacityOnGrid == true) {
+				if (opts.opacityOnGrid === true) {
 					opacityOnGrid = 0;
 				} else {
 					opacityOnGrid = 1;
@@ -1210,7 +1226,7 @@
 
 				var dataFx = $(' > div', elem).eq(slideI).attr('data-fx');
 
-				if (isMobile() && opts.mobileFx != '' && opts.mobileFx != 'default') {
+				if (isMobile() && opts.mobileFx !== '' && opts.mobileFx !== 'default') {
 					fx = opts.mobileFx;
 				} else {
 					if (typeof dataFx !== 'undefined' && dataFx !== false && dataFx !== 'default') {
@@ -1220,7 +1236,7 @@
 					}
 				}
 
-				if (fx == 'random') {
+				if (fx === 'random') {
 					fx = shuffle(randomFx);
 					fx = fx[0];
 				} else {
@@ -1235,7 +1251,7 @@
 				dataEasing = $(' > div', elem).eq(slideI).attr('data-easing');
 				mobileEasing = $(' > div', elem).eq(slideI).attr('data-mobileEasing');
 
-				if (isMobile() && opts.mobileEasing != '' && opts.mobileEasing != 'default') {
+				if (isMobile() && opts.mobileEasing !== '' && opts.mobileEasing !== 'default') {
 					if (typeof mobileEasing !== 'undefined' && mobileEasing !== false && mobileEasing !== 'default') {
 						easing = mobileEasing;
 					} else {
@@ -1253,7 +1269,7 @@
 				if (typeof dataSlideOn !== 'undefined' && dataSlideOn !== false) {
 					slideOn = dataSlideOn;
 				} else {
-					if (opts.slideOn == 'random') {
+					if (opts.slideOn === 'random') {
 						var slideOn = ['next', 'prev'];
 						slideOn = shuffle(slideOn);
 						slideOn = slideOn[0];
@@ -1290,7 +1306,7 @@
 						rows = 1;
 						break;
 					case 'curtainTopLeft':
-						if (opts.slicedCols == 0) {
+						if (opts.slicedCols === 0) {
 							cols = opts.cols;
 						} else {
 							cols = opts.slicedCols;
@@ -1298,7 +1314,7 @@
 						rows = 1;
 						break;
 					case 'curtainTopRight':
-						if (opts.slicedCols == 0) {
+						if (opts.slicedCols === 0) {
 							cols = opts.cols;
 						} else {
 							cols = opts.slicedCols;
@@ -1306,7 +1322,7 @@
 						rows = 1;
 						break;
 					case 'curtainBottomLeft':
-						if (opts.slicedCols == 0) {
+						if (opts.slicedCols === 0) {
 							cols = opts.cols;
 						} else {
 							cols = opts.slicedCols;
@@ -1314,7 +1330,7 @@
 						rows = 1;
 						break;
 					case 'curtainBottomRight':
-						if (opts.slicedCols == 0) {
+						if (opts.slicedCols === 0) {
 							cols = opts.cols;
 						} else {
 							cols = opts.slicedCols;
@@ -1322,7 +1338,7 @@
 						rows = 1;
 						break;
 					case 'curtainSliceLeft':
-						if (opts.slicedCols == 0) {
+						if (opts.slicedCols === 0) {
 							cols = opts.cols;
 						} else {
 							cols = opts.slicedCols;
@@ -1330,7 +1346,7 @@
 						rows = 1;
 						break;
 					case 'curtainSliceRight':
-						if (opts.slicedCols == 0) {
+						if (opts.slicedCols === 0) {
 							cols = opts.cols;
 						} else {
 							cols = opts.slicedCols;
@@ -1338,7 +1354,7 @@
 						rows = 1;
 						break;
 					case 'blindCurtainTopLeft':
-						if (opts.slicedRows == 0) {
+						if (opts.slicedRows === 0) {
 							rows = opts.rows;
 						} else {
 							rows = opts.slicedRows;
@@ -1346,7 +1362,7 @@
 						cols = 1;
 						break;
 					case 'blindCurtainTopRight':
-						if (opts.slicedRows == 0) {
+						if (opts.slicedRows === 0) {
 							rows = opts.rows;
 						} else {
 							rows = opts.slicedRows;
@@ -1354,7 +1370,7 @@
 						cols = 1;
 						break;
 					case 'blindCurtainBottomLeft':
-						if (opts.slicedRows == 0) {
+						if (opts.slicedRows === 0) {
 							rows = opts.rows;
 						} else {
 							rows = opts.slicedRows;
@@ -1362,7 +1378,7 @@
 						cols = 1;
 						break;
 					case 'blindCurtainBottomRight':
-						if (opts.slicedRows == 0) {
+						if (opts.slicedRows === 0) {
 							rows = opts.rows;
 						} else {
 							rows = opts.slicedRows;
@@ -1370,7 +1386,7 @@
 						cols = 1;
 						break;
 					case 'blindCurtainSliceTop':
-						if (opts.slicedRows == 0) {
+						if (opts.slicedRows === 0) {
 							rows = opts.rows;
 						} else {
 							rows = opts.slicedRows;
@@ -1378,7 +1394,7 @@
 						cols = 1;
 						break;
 					case 'blindCurtainSliceBottom':
-						if (opts.slicedRows == 0) {
+						if (opts.slicedRows === 0) {
 							rows = opts.rows;
 						} else {
 							rows = opts.slicedRows;
@@ -1458,10 +1474,10 @@
 					delay.push(cycle);
 					cameraCont.append('<div class="cameraappended" style="display:none; overflow:hidden; position:absolute; z-index:1000"></div>');
 					var tApp = $('.cameraappended:eq(' + cycle + ')', target);
-					if (fx == 'scrollLeft' || fx == 'scrollRight' || fx == 'scrollTop' || fx == 'scrollBottom' || fx == 'scrollHorz') {
+					if (fx === 'scrollLeft' || fx === 'scrollRight' || fx === 'scrollTop' || fx === 'scrollBottom' || fx === 'scrollHorz') {
 						selector.eq(slideI).clone().show().appendTo(tApp);
 					} else {
-						if (slideOn == 'next') {
+						if (slideOn === 'next') {
 							selector.eq(slideI).clone().show().appendTo(tApp);
 						} else {
 							selector.eq(vis).clone().show().appendTo(tApp);
@@ -1473,7 +1489,7 @@
 					} else {
 						addLeft = 0;
 					}
-					if (cycle % cols == 0) {
+					if ((cycle % cols) === 0) {
 						tAppW = 0;
 					}
 					if (Math.floor(cycle / cols) < topScrap) {
@@ -1494,7 +1510,7 @@
 						'width': w
 					});
 					tAppW = tAppW + tApp.width() - 1;
-					if (cycle % cols == cols - 1) {
+					if ((cycle % cols) === (cols - 1)) {
 						tAppH = tAppH + tApp.height() - 1;
 					}
 					cycle++;
@@ -1645,76 +1661,80 @@
 							opacityOnGrid = 0;
 							break;
 						case 'curtainTopLeft':
-							height = 0,
-								width = Math.floor((w / cols) + addLeft + 1),
-								marginTop = '-' + Math.floor((h / rows) + addTop + 1) + 'px';
+							height = 0;
+							width = Math.floor((w / cols) + addLeft + 1);
+							marginTop = '-' + Math.floor((h / rows) + addTop + 1) + 'px';
 							break;
 						case 'curtainTopRight':
-							height = 0,
-								width = Math.floor((w / cols) + addLeft + 1),
-								marginTop = '-' + Math.floor((h / rows) + addTop + 1) + 'px';
+							height = 0;
+							width = Math.floor((w / cols) + addLeft + 1);
+							marginTop = '-' + Math.floor((h / rows) + addTop + 1) + 'px';
 							break;
 						case 'curtainBottomLeft':
-							height = 0,
-								width = Math.floor((w / cols) + addLeft + 1),
-								marginTop = Math.floor((h / rows) + addTop + 1) + 'px';
+							height = 0;
+							width = Math.floor((w / cols) + addLeft + 1);
+							marginTop = Math.floor((h / rows) + addTop + 1) + 'px';
 							break;
 						case 'curtainBottomRight':
-							height = 0,
-								width = Math.floor((w / cols) + addLeft + 1),
-								marginTop = Math.floor((h / rows) + addTop + 1) + 'px';
+							height = 0;
+							width = Math.floor((w / cols) + addLeft + 1);
+							marginTop = Math.floor((h / rows) + addTop + 1) + 'px';
 							break;
 						case 'curtainSliceLeft':
-							height = 0,
-								width = Math.floor((w / cols) + addLeft + 1);
-							if (value % 2 == 0) {
+							height = 0;
+							width = Math.floor((w / cols) + addLeft + 1);
+
+							if ((value % 2) === 0) {
 								marginTop = Math.floor((h / rows) + addTop + 1) + 'px';
 							} else {
 								marginTop = '-' + Math.floor((h / rows) + addTop + 1) + 'px';
 							}
 							break;
 						case 'curtainSliceRight':
-							height = 0,
-								width = Math.floor((w / cols) + addLeft + 1);
-							if (value % 2 == 0) {
+							height = 0;
+							width = Math.floor((w / cols) + addLeft + 1);
+
+							if ((value % 2) === 0) {
 								marginTop = Math.floor((h / rows) + addTop + 1) + 'px';
 							} else {
 								marginTop = '-' + Math.floor((h / rows) + addTop + 1) + 'px';
 							}
 							break;
 						case 'blindCurtainTopLeft':
-							height = Math.floor((h / rows) + addTop + 1),
-								width = 0,
-								marginLeft = '-' + Math.floor((w / cols) + addLeft + 1) + 'px';
+							height = Math.floor((h / rows) + addTop + 1);
+							width = 0;
+							marginLeft = '-' + Math.floor((w / cols) + addLeft + 1) + 'px';
 							break;
 						case 'blindCurtainTopRight':
-							height = Math.floor((h / rows) + addTop + 1),
-								width = 0,
-								marginLeft = Math.floor((w / cols) + addLeft + 1) + 'px';
+							height = Math.floor((h / rows) + addTop + 1);
+							width = 0;
+							marginLeft = Math.floor((w / cols) + addLeft + 1) + 'px';
 							break;
 						case 'blindCurtainBottomLeft':
-							height = Math.floor((h / rows) + addTop + 1),
-								width = 0,
-								marginLeft = '-' + Math.floor((w / cols) + addLeft + 1) + 'px';
+							height = Math.floor((h / rows) + addTop + 1);
+							width = 0;
+							marginLeft = '-' + Math.floor((w / cols) + addLeft + 1) + 'px';
 							break;
 						case 'blindCurtainBottomRight':
-							height = Math.floor((h / rows) + addTop + 1),
-								width = 0,
-								marginLeft = Math.floor((w / cols) + addLeft + 1) + 'px';
+							height = Math.floor((h / rows) + addTop + 1);
+							width = 0;
+							marginLeft = Math.floor((w / cols) + addLeft + 1) + 'px';
 							break;
 						case 'blindCurtainSliceBottom':
-							height = Math.floor((h / rows) + addTop + 1),
-								width = 0;
-							if (value % 2 == 0) {
+							height = Math.floor((h / rows) + addTop + 1);
+							width = 0;
+
+							if ((value % 2) === 0) {
 								marginLeft = '-' + Math.floor((w / cols) + addLeft + 1) + 'px';
 							} else {
 								marginLeft = Math.floor((w / cols) + addLeft + 1) + 'px';
 							}
 							break;
 						case 'blindCurtainSliceTop':
-							height = Math.floor((h / rows) + addTop + 1),
-								width = 0;
-							if (value % 2 == 0) {
+							height = Math.floor((h / rows) + addTop + 1);
+							width = 0;
+
+							if ((value % 2) === 0) {
 								marginLeft = '-' + Math.floor((w / cols) + addLeft + 1) + 'px';
 							} else {
 								marginLeft = Math.floor((w / cols) + addLeft + 1) + 'px';
@@ -1799,9 +1819,9 @@
 						case 'scrollHorz':
 							height = h;
 							width = w;
-							if (vis == 0 && slideI == amountSlide - 1) {
+							if (vis === 0 && slideI === (amountSlide - 1)) {
 								marginLeft = -w;
-							} else if (vis < slideI || (vis == amountSlide - 1 && slideI == 0)) {
+							} else if (vis < slideI || (vis === (amountSlide - 1) && slideI === 0)) {
 								marginLeft = w;
 							} else {
 								marginLeft = -w;
@@ -1847,7 +1867,7 @@
 						if ($('.cameraeased', target).length >= 0) {
 							$(thumbs).css({visibility: 'visible'});
 						}
-						if ($('.cameraeased', target).length == blocks) {
+						if ($('.cameraeased', target).length === blocks) {
 
 							thumbnailPos();
 
@@ -1864,7 +1884,7 @@
 
 							opts.onEndTransition.call(this);
 
-							if ($('> div', elem).eq(slideI).attr('data-video') != 'hide' && $('.cameraContent.cameracurrent .imgFake', fakeHover).length) {
+							if ($('> div', elem).eq(slideI).attr('data-video') !== 'hide' && $('.cameraContent.cameracurrent .imgFake', fakeHover).length) {
 								$('.cameraContent.cameracurrent .imgFake', fakeHover).click();
 							}
 
@@ -1872,9 +1892,9 @@
 							var lMoveIn = selector.eq(slideI).find('.fadeIn').length;
 							var lMoveInContent = $('.cameraContent', fakeHover).eq(slideI).find('.moveFromLeft, .moveFromRight, .moveFromTop, .moveFromBottom, .fadeIn, .fadeFromLeft, .fadeFromRight, .fadeFromTop, .fadeFromBottom').length;
 
-							if (lMoveIn != 0) {
+							if (lMoveIn !== 0) {
 								$('.cameraSlide.cameracurrent .fadeIn', fakeHover).each(function () {
-									if ($(this).attr('data-easing') != '') {
+									if ($(this).attr('data-easing') !== '') {
 										var easeMove = $(this).attr('data-easing');
 									} else {
 										var easeMove = easing;
@@ -1900,7 +1920,7 @@
 									var ind = t.index();
 									var hRel = t.parents('.camerarelative').outerHeight();
 									var wRel = t.parents('.camerarelative').outerWidth();
-									if (tClass.indexOf("fadeIn") != -1) {
+									if (tClass.indexOf("fadeIn") !== -1) {
 										t.animate({opacity: 0}, 0).css('visibility', 'visible').delay((time / lMoveIn) * (0.1 * (ind - 1))).animate({opacity: 1}, (time / lMoveIn) * 0.15, easeMove);
 									} else {
 										t.css('visibility', 'visible');
@@ -1909,10 +1929,10 @@
 							}
 
 							$('.cameraContent.cameracurrent', fakeHover).show();
-							if (lMoveInContent != 0) {
+							if (lMoveInContent !== 0) {
 
 								$('.cameraContent.cameracurrent .moveFromLeft, .cameraContent.cameracurrent .moveFromRight, .cameraContent.cameracurrent .moveFromTop, .cameraContent.cameracurrent .moveFromBottom, .cameraContent.cameracurrent .fadeIn, .cameraContent.cameracurrent .fadeFromLeft, .cameraContent.cameracurrent .fadeFromRight, .cameraContent.cameracurrent .fadeFromTop, .cameraContent.cameracurrent .fadeFromBottom', fakeHover).each(function () {
-									if ($(this).attr('data-easing') != '') {
+									if ($(this).attr('data-easing') !== '') {
 										var easeMove = $(this).attr('data-easing');
 									} else {
 										var easeMove = easing;
@@ -1924,33 +1944,33 @@
 									var tClass = t.attr('class');
 									var ind = t.index();
 									var thisH = t.outerHeight();
-									if (tClass.indexOf("moveFromLeft") != -1) {
+									if (tClass.indexOf("moveFromLeft") !== -1) {
 										t.css({'left': '-' + (w) + 'px', 'right': 'auto'});
 										t.css('visibility', 'visible').delay((time / lMoveInContent) * (0.1 * (ind - 1))).animate({'left': pos.left}, (time / lMoveInContent) * 0.15, easeMove);
-									} else if (tClass.indexOf("moveFromRight") != -1) {
+									} else if (tClass.indexOf("moveFromRight") !== -1) {
 										t.css({'left': w + 'px', 'right': 'auto'});
 										t.css('visibility', 'visible').delay((time / lMoveInContent) * (0.1 * (ind - 1))).animate({'left': pos.left}, (time / lMoveInContent) * 0.15, easeMove);
-									} else if (tClass.indexOf("moveFromTop") != -1) {
+									} else if (tClass.indexOf("moveFromTop") !== -1) {
 										t.css({'top': '-' + h + 'px', 'bottom': 'auto'});
 										t.css('visibility', 'visible').delay((time / lMoveInContent) * (0.1 * (ind - 1))).animate({'top': pos.top}, (time / lMoveInContent) * 0.15, easeMove, function () {
 											t.css({top: 'auto', bottom: 0});
 										});
-									} else if (tClass.indexOf("moveFromBottom") != -1) {
+									} else if (tClass.indexOf("moveFromBottom") !== -1) {
 										t.css({'top': h + 'px', 'bottom': 'auto'});
 										t.css('visibility', 'visible').delay((time / lMoveInContent) * (0.1 * (ind - 1))).animate({'top': pos.top}, (time / lMoveInContent) * 0.15, easeMove);
-									} else if (tClass.indexOf("fadeFromLeft") != -1) {
+									} else if (tClass.indexOf("fadeFromLeft") !== -1) {
 										t.animate({opacity: 0}, 0).css({'left': '-' + (w) + 'px', 'right': 'auto'});
 										t.css('visibility', 'visible').delay((time / lMoveInContent) * (0.1 * (ind - 1))).animate({
 											'left': pos.left,
 											opacity: 1
 										}, (time / lMoveInContent) * 0.15, easeMove);
-									} else if (tClass.indexOf("fadeFromRight") != -1) {
+									} else if (tClass.indexOf("fadeFromRight") !== -1) {
 										t.animate({opacity: 0}, 0).css({'left': (w) + 'px', 'right': 'auto'});
 										t.css('visibility', 'visible').delay((time / lMoveInContent) * (0.1 * (ind - 1))).animate({
 											'left': pos.left,
 											opacity: 1
 										}, (time / lMoveInContent) * 0.15, easeMove);
-									} else if (tClass.indexOf("fadeFromTop") != -1) {
+									} else if (tClass.indexOf("fadeFromTop") !== -1) {
 										t.animate({opacity: 0}, 0).css({'top': '-' + (h) + 'px', 'bottom': 'auto'});
 										t.css('visibility', 'visible').delay((time / lMoveInContent) * (0.1 * (ind - 1))).animate({
 											'top': pos.top,
@@ -1958,13 +1978,13 @@
 										}, (time / lMoveInContent) * 0.15, easeMove, function () {
 											t.css({top: 'auto', bottom: 0});
 										});
-									} else if (tClass.indexOf("fadeFromBottom") != -1) {
+									} else if (tClass.indexOf("fadeFromBottom") !== -1) {
 										t.animate({opacity: 0}, 0).css({'bottom': '-' + thisH + 'px'});
 										t.css('visibility', 'visible').delay((time / lMoveInContent) * (0.1 * (ind - 1))).animate({
 											'bottom': '0',
 											opacity: 1
 										}, (time / lMoveInContent) * 0.15, easeMove);
-									} else if (tClass.indexOf("fadeIn") != -1) {
+									} else if (tClass.indexOf("fadeIn") !== -1) {
 										t.animate({opacity: 0}, 0).css('visibility', 'visible').delay((time / lMoveInContent) * (0.1 * (ind - 1))).animate({opacity: 1}, (time / lMoveInContent) * 0.15, easeMove);
 									} else {
 										t.css('visibility', 'visible');
@@ -1979,7 +1999,7 @@
 							var barWidth = $('.camera_bar_cont', camera_thumbs_wrap).width(),
 								barHeight = $('.camera_bar_cont', camera_thumbs_wrap).height(),
 								radSum;
-							if (loader != 'pie') {
+							if (loader !== 'pie') {
 								radSum = 0.05;
 							} else {
 								radSum = 0.005;
@@ -1990,7 +2010,7 @@
 									if (elem.hasClass('stopped')) {
 										clearInterval(u);
 									}
-									if (loader != 'pie') {
+									if (loader !== 'pie') {
 										if (rad <= 1.002 && !elem.hasClass('stopped') && !elem.hasClass('paused') && !elem.hasClass('hovered')) {
 											rad = (rad + radSum);
 										} else if (rad <= 1 && (elem.hasClass('stopped') || elem.hasClass('paused') || elem.hasClass('stopped') || elem.hasClass('hovered'))) {
@@ -2064,7 +2084,7 @@
 					}
 
 
-					if (fx == 'scrollLeft' || fx == 'scrollRight' || fx == 'scrollTop' || fx == 'scrollBottom' || fx == 'scrollHorz') {
+					if (fx === 'scrollLeft' || fx === 'scrollRight' || fx === 'scrollTop' || fx === 'scrollBottom' || fx === 'scrollHorz') {
 						opts.onStartTransition.call(this);
 						easedTime = 0;
 						tApp.delay((((transPeriod + difference) / blocks) * delay[index] * couples) * 0.5).css({
@@ -2088,7 +2108,7 @@
 					} else {
 						opts.onStartTransition.call(this);
 						easedTime = parseFloat(transPeriod) + parseFloat(difference);
-						if (slideOn == 'next') {
+						if (slideOn === 'next') {
 							tApp.delay((((transPeriod + difference) / blocks) * delay[index] * couples) * 0.5).css({
 								'display': 'block',
 								'height': height,
@@ -2141,7 +2161,7 @@
 					imgFake();
 					$('#' + pieID + ', .camera_canvas_wrap', wrap).animate({opacity: 0}, 0);
 					canvasLoader();
-					if (idNum != 0) {
+					if (idNum !== 0) {
 						nextSlide(idNum);
 					} else {
 						nextSlide(amountSlide);
@@ -2159,7 +2179,7 @@
 					imgFake();
 					$('#' + pieID + ', .camera_canvas_wrap', camera_thumbs_wrap).animate({opacity: 0}, 0);
 					canvasLoader();
-					if (idNum == amountSlide - 1) {
+					if (idNum === (amountSlide - 1)) {
 						nextSlide(1);
 					} else {
 						nextSlide(idNum + 2);
@@ -2178,7 +2198,7 @@
 					imgFake();
 					$('#' + pieID + ', .camera_canvas_wrap', camera_thumbs_wrap).animate({opacity: 0}, 0);
 					canvasLoader();
-					if (idNum == amountSlide - 1) {
+					if (idNum === (amountSlide - 1)) {
 						nextSlide(1);
 					} else {
 						nextSlide(idNum + 2);
@@ -2193,7 +2213,7 @@
 					imgFake();
 					$('#' + pieID + ', .camera_canvas_wrap', camera_thumbs_wrap).animate({opacity: 0}, 0);
 					canvasLoader();
-					if (idNum != 0) {
+					if (idNum !== 0) {
 						nextSlide(idNum);
 					} else {
 						nextSlide(amountSlide);
@@ -2208,7 +2228,7 @@
 				if (!elem.hasClass('camerasliding')) {
 					var idNum = parseFloat($(this).index());
 					var curNum = parseFloat($('.cameraSlide.cameracurrent', target).index());
-					if (idNum != curNum) {
+					if (idNum !== curNum) {
 						clearInterval(u);
 						imgFake();
 						$('#' + pieID + ', .camera_canvas_wrap', camera_thumbs_wrap).animate({opacity: 0}, 0);
@@ -2226,7 +2246,7 @@
 				if (!elem.hasClass('camerasliding')) {
 					var idNum = parseFloat($(this).parents('li').index());
 					var curNum = parseFloat($('.cameracurrent', target).index());
-					if (idNum != curNum) {
+					if (idNum !== curNum) {
 						clearInterval(u);
 						imgFake();
 						$('#' + pieID + ', .camera_canvas_wrap', camera_thumbs_wrap).animate({opacity: 0}, 0);
