@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- Camera is a Pixedelic free jQuery slideshow | Manuel Masia (designer and developer) -->
-<html>
+<html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Camera | a free jQuery slideshow by Pixedelic</title>
@@ -54,13 +54,15 @@
 	<script type='text/javascript' src='../scripts/camera.js'></script>
 
 	<script>
-		jQuery(function () {
+		<!--
 
+		jQuery(function () {
 			jQuery('#camera_random').camera({
 				thumbnails: true
 			});
-
 		});
+
+		// -->
 	</script>
 
 </head>
@@ -73,46 +75,53 @@
 	<div class="camera_wrap camera_azure_skin" id="camera_random">
 		<?php
 		$slides = array(
-			'<div data-thumb="../images/slides/thumbs/bridge.jpg" data-src="../images/slides/bridge.jpg">
+			'<div data-thumb="../images/slides/thumbs/bridge.jpg" data-src="../images/slides/bridge.jpg"
+				 data-alt="Red Bridge" data-alt-thumb="Red Bride Thumbnail">
 				<div class="camera_caption fadeFromBottom">
 					Camera is a responsive/adaptive slideshow. <em>Try to resize the browser window</em>
 				</div>
 			</div>',
-			'<div data-thumb="../images/slides/thumbs/leaf.jpg" data-src="../images/slides/leaf.jpg">
+			'<div data-thumb="../images/slides/thumbs/leaf.jpg" data-src="../images/slides/leaf.jpg"
+ 				 data-alt="Sunshine Leaf" data-alt-thumb="Sunshine Leaf Thumbnail">
 				<div class="camera_caption fadeFromBottom">
 					It uses a light version of jQuery mobile, <em>navigate the slides by swiping with your fingers</em>
 				</div>
 			</div>',
-			'<div data-thumb="../images/slides/thumbs/road.jpg" data-src="../images/slides/road.jpg">
+			'<div data-thumb="../images/slides/thumbs/road.jpg" data-src="../images/slides/road.jpg"
+				 data-alt="Road" data-alt-thumb="Road Thumbnail">
 				<div class="camera_caption fadeFromBottom">
 					<em>It\'s completely free</em> (even if a donation is appreciated)
 				</div>
 			</div>',
-			'<div data-thumb="../images/slides/thumbs/sea.jpg" data-src="../images/slides/sea.jpg">
+			'<div data-thumb="../images/slides/thumbs/sea.jpg" data-src="../images/slides/sea.jpg"
+				 data-alt="Ocean" data-alt-thumb="Ocean Thumbnail">
 				<div class="camera_caption fadeFromBottom">
 					Camera slideshow provides many options <em>to customize your project</em> as more as possible
 				</div>
 			</div>',
-			'<div data-thumb="../images/slides/thumbs/shelter.jpg" data-src="../images/slides/shelter.jpg">
+			'<div data-thumb="../images/slides/thumbs/shelter.jpg" data-src="../images/slides/shelter.jpg"
+				 data-alt="Valley with Fog" data-alt-thumb="Valley with Fog Thumbnail">
 				<div class="camera_caption fadeFromBottom">
 					It supports captions, HTML elements and videos and <em>it\'s validated in HTML5</em> (<a href="http://validator.w3.org/check?uri=http%3A%2F%2Fwww.pixedelic.com%2Fplugins%2Fcamera%2F&amp;charset=%28detect+automatically%29&amp;doctype=Inline&amp;group=0&amp;user-agent=W3C_Validator%2F1.2" target="_blank">have a look</a>)
 				</div>
 			</div>',
-			'<div data-thumb="../images/slides/thumbs/tree.jpg" data-src="../images/slides/tree.jpg">
+			'<div data-thumb="../images/slides/thumbs/tree.jpg" data-src="../images/slides/tree.jpg"
+				 data-alt="Path through a Forest" data-alt-thumb="Path through a Forest Thumbnail">
 				<div class="camera_caption fadeFromBottom">
 					Different color skins and layouts available, <em>fullscreen ready too</em>
 				</div>
 			</div>'
 		);
+
 		shuffle($slides);
-		foreach($slides as $slides) {
-			echo "$slides\n";
-		}
+		foreach($slides as $slide)
+			echo $slide . PHP_EOL;
+
 		?>
 	</div><!-- #camera_random -->
 
 </div><!-- .fluid_container -->
 
-<div style="clear:both; display:block; height:100px"></div>
+<div style="clear:both; display:block; height:100px;"></div>
 </body>
 </html>

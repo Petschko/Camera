@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- Camera is a Pixedelic free jQuery slideshow | Manuel Masia (designer and developer) -->
-<html>
+<html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Camera | a free jQuery slideshow by Pixedelic</title>
@@ -92,8 +92,9 @@
 	<script type='text/javascript' src='../scripts/camera.js'></script>
 
 	<script>
-		jQuery(function () {
+		<!--
 
+		jQuery(function () {
 			jQuery('#camera_wrap_4').camera({
 				height: 'auto',
 				loader: 'bar',
@@ -103,8 +104,9 @@
 				opacityOnGrid: false,
 				imagePath: '../images/'
 			});
-
 		});
+
+		// -->
 	</script>
 
 </head>
@@ -115,17 +117,23 @@
 
 <div class="fluid_container">
 	<div class="camera_wrap camera_emboss pattern_1" id="camera_wrap_4">
-		<div data-thumb="../images/slides/thumbs/bridge.jpg" data-src="../images/slides/bridge.jpg">
+		<div data-thumb="../images/slides/thumbs/bridge.jpg" data-src="../images/slides/bridge.jpg"
+			 data-alt="Red Bridge" data-alt-thumb="Red Bride Thumbnail">
 		</div>
-		<div data-thumb="../images/slides/thumbs/leaf.jpg" data-src="../images/slides/leaf.jpg">
+		<div data-thumb="../images/slides/thumbs/leaf.jpg" data-src="../images/slides/leaf.jpg"
+			 data-alt="Sunshine Leaf" data-alt-thumb="Sunshine Leaf Thumbnail">
 		</div>
-		<div data-thumb="../images/slides/thumbs/road.jpg" data-src="../images/slides/road.jpg">
+		<div data-thumb="../images/slides/thumbs/road.jpg" data-src="../images/slides/road.jpg"
+			 data-alt="Road" data-alt-thumb="Road Thumbnail">
 		</div>
-		<div data-thumb="../images/slides/thumbs/sea.jpg" data-src="../images/slides/sea.jpg">
+		<div data-thumb="../images/slides/thumbs/sea.jpg" data-src="../images/slides/sea.jpg"
+			 data-alt="Ocean" data-alt-thumb="Ocean Thumbnail">
 		</div>
-		<div data-thumb="../images/slides/thumbs/shelter.jpg" data-src="../images/slides/shelter.jpg">
+		<div data-thumb="../images/slides/thumbs/shelter.jpg" data-src="../images/slides/shelter.jpg"
+			 data-alt="Valley with Fog" data-alt-thumb="Valley with Fog Thumbnail">
 		</div>
-		<div data-thumb="../images/slides/thumbs/tree.jpg" data-src="../images/slides/tree.jpg">
+		<div data-thumb="../images/slides/thumbs/tree.jpg" data-src="../images/slides/tree.jpg"
+			 data-alt="Path through a Forest" data-alt-thumb="Path through a Forest Thumbnail">
 		</div>
 	</div><!-- #camera_wrap_3 -->
 
