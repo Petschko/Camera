@@ -219,6 +219,22 @@
 			allImg.push($(this).attr('data-src'));
 		});
 
+		var allAlt = [];
+		$('> div', elem).each( function() {
+			if($(this).attr('data-alt'))
+				allAlt.push($(this).attr('data-alt'));
+			else
+				allAlt.push('');
+		});
+
+		var allThumbAlt = [];
+		$('> div', elem).each( function() {
+			if($(this).attr('data-alt-thumb'))
+				allThumbAlt.push($(this).attr('data-alt-thumb'));
+			else
+				allThumbAlt.push('');
+		});
+
 		var allLinks = [];
 		$('> div', elem).each(function () {
 			if ($(this).attr('data-link'))
@@ -951,6 +967,10 @@
 						thumbUrl = $('> div', elem).eq(i).attr('data-thumb');
 						var newImg = new Image();
 						newImg.src = thumbUrl;
+
+						if(allThumbAlt[i])
+							newImg.alt = allThumbAlt[i];
+
 						$('ul', thumbs).append('<li class="pix_thumb pix_thumb_' + i + '"></li>');
 						$('li.pix_thumb_' + i, thumbs).append($(newImg).attr('class', 'camera_thumb'));
 					}
@@ -961,6 +981,10 @@
 						thumbUrl = $('> div', elem).eq(i).attr('data-thumb');
 						var newImg = new Image();
 						newImg.src = thumbUrl;
+
+						if(allThumbAlt[i])
+							newImg.alt = allThumbAlt[i];
+
 						$('li.pag_nav_' + i, pagination).append($(newImg).attr('class', 'camera_thumb').css({'position': 'absolute'}).animate({opacity: 0}, 0));
 						$('li.pag_nav_' + i + ' > img', pagination).after('<div class="thumb_arrow"></div>');
 						$('li.pag_nav_' + i + ' > .thumb_arrow', pagination).animate({opacity: 0}, 0);
@@ -1123,6 +1147,10 @@
 						$(imgLoaded).attr('data-alignment', allAlign[slideI]).attr('data-portrait', allPor[slideI]);
 						$(imgLoaded).attr('width', wT);
 						$(imgLoaded).attr('height', hT);
+
+						if(allAlt[slideI])
+							$(imgLoaded).attr('alt', allAlt[slideI]);
+
 						target.find('.cameraSlide_' + slideI).hide().css('visibility', 'visible');
 						resizeImage();
 						nextSlide(slideI + 1);
@@ -1141,6 +1169,10 @@
 						$(imgLoaded2).attr('data-alignment', allAlign[slideI + 1]).attr('data-portrait', allPor[slideI + 1]);
 						$(imgLoaded2).attr('width', wT);
 						$(imgLoaded2).attr('height', hT);
+
+						if(allAlt[slideI + 1])
+							$(imgLoaded).attr('alt', allAlt[slideI + 1]);
+
 						resizeImage();
 					};
 				}
