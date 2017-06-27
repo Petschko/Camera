@@ -98,9 +98,7 @@
 			/**
 			 * this callback is invoked when the image on a slide has completely loaded
 			 */
-			onLoaded: function () {
-				$('.cameraGlobal').css({display: 'inherit'});
-			},
+			onLoaded: function () {},
 
 			/**
 			 * this callback is invoked when the image on a slide start loading
@@ -222,6 +220,7 @@
 		var allAlign = [];
 		var allThumbs = [];
 		var globalContent = null;
+		var globalContentContainer = null;
 
 		$('> div', elem).each(function () {
 			if(! $(this).hasClass('camera_global_content')) {
@@ -274,8 +273,11 @@
 		var amountSlide = allImg.length;
 
 		$(content).append('<div class="cameraContents"></div>');
-		if(globalContent)
-			$('.cameraContents', content).append('<div class="cameraGlobal" style="display: none;">' + globalContent.html() + '</div>');
+		if(globalContent) {
+			$('.cameraContents', content).append('<div class="cameraGlobal">' + globalContent.html() + '</div>');
+			globalContentContainer = $('.cameraGlobal');
+			globalContentContainer.hide();
+		}
 		var loopMove;
 		for (loopMove = 0; loopMove < amountSlide; loopMove++) {
 			$('.cameraContents', content).append('<div class="cameraContent"></div>');
@@ -349,6 +351,8 @@
 
 		var started;
 		wrap.show();
+		if(globalContentContainer)
+			globalContentContainer.show();
 		var w = target.width();
 		var h = target.height();
 		var setPause;
@@ -923,7 +927,7 @@
 		if ($(pagination).length) {
 			$(pagination).append('<ul class="camera_pag_ul"></ul>');
 			for (var li = 0; li < amountSlide; li++)
-				$('.camera_pag_ul', wrap).append('<li class="pag_nav_' + li + '" style="position: relative; z-index: 1002"><span><span>' + li + '</span></span></li>');
+				$('.camera_pag_ul', wrap).append('<li class="pag_nav_' + li + '" style="position: relative; z-index: 1002;"><span><span>' + li + '</span></span></li>');
 
 			$('.camera_pag_ul li', wrap).hover(function () {
 				$(this).addClass('camera_hover');
