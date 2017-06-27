@@ -98,7 +98,9 @@
 			/**
 			 * this callback is invoked when the image on a slide has completely loaded
 			 */
-			onLoaded: function () {},
+			onLoaded: function () {
+				$('.cameraGlobal').css({display: 'inherit'});
+			},
 
 			/**
 			 * this callback is invoked when the image on a slide start loading
@@ -273,7 +275,7 @@
 
 		$(content).append('<div class="cameraContents"></div>');
 		if(globalContent)
-			$('.cameraContents', content).append('<div class="cameraGlobal">' + globalContent.html() + '</div>');
+			$('.cameraContents', content).append('<div class="cameraGlobal" style="display: none;">' + globalContent.html() + '</div>');
 		var loopMove;
 		for (loopMove = 0; loopMove < amountSlide; loopMove++) {
 			$('.cameraContents', content).append('<div class="cameraContent"></div>');
