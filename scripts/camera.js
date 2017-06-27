@@ -272,7 +272,8 @@
 		var amountSlide = allImg.length;
 
 		$(content).append('<div class="cameraContents"></div>');
-		$('.cameraContents', content).append('<div class="cameraGlobal">' + globalContent.html() + '</div>');
+		if(globalContent)
+			$('.cameraContents', content).append('<div class="cameraGlobal">' + globalContent.html() + '</div>');
 		var loopMove;
 		for (loopMove = 0; loopMove < amountSlide; loopMove++) {
 			$('.cameraContents', content).append('<div class="cameraContent"></div>');
