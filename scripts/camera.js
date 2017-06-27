@@ -200,7 +200,6 @@
 			$(this).wrapInner('<div></div>');
 		});
 
-
 		var pieID = 'pie_' + wrap.index();
 		var elem = $('.camera_src', wrap);
 		var target = $('.camera_target', wrap);
@@ -212,73 +211,68 @@
 		var commands = $('.camera_commands', wrap);
 		var pagination = $('.camera_pag', wrap);
 		var thumbs = $('.camera_thumbs_cont', wrap);
-
-
 		var allImg = [];
-		$('> div', elem).each(function () {
-			allImg.push($(this).attr('data-src'));
-		});
-
 		var allAlt = [];
-		$('> div', elem).each( function() {
-			if($(this).attr('data-alt'))
-				allAlt.push($(this).attr('data-alt'));
-			else
-				allAlt.push('');
-		});
-
 		var allThumbAlt = [];
-		$('> div', elem).each( function() {
-			if($(this).attr('data-alt-thumb'))
-				allThumbAlt.push($(this).attr('data-alt-thumb'));
-			else
-				allThumbAlt.push('');
-		});
-
 		var allLinks = [];
-		$('> div', elem).each(function () {
-			if ($(this).attr('data-link'))
-				allLinks.push($(this).attr('data-link'));
-			else
-				allLinks.push('');
-		});
-
 		var allTargets = [];
-		$('> div', elem).each(function () {
-			if ($(this).attr('data-target'))
-				allTargets.push($(this).attr('data-target'));
-			else
-				allTargets.push('');
-		});
-
 		var allPor = [];
-		$('> div', elem).each(function () {
-			if ($(this).attr('data-portrait'))
-				allPor.push($(this).attr('data-portrait'));
-			else
-				allPor.push('');
-		});
-
 		var allAlign = [];
-		$('> div', elem).each(function () {
-			if ($(this).attr('data-alignment'))
-				allAlign.push($(this).attr('data-alignment'));
-			else
-				allAlign.push('');
-		});
-
-
 		var allThumbs = [];
+		var globalContent = null;
+
 		$('> div', elem).each(function () {
-			if ($(this).attr('data-thumb'))
-				allThumbs.push($(this).attr('data-thumb'));
-			else
-				allThumbs.push('');
+			if(! $(this).hasClass('camera_global_content')) {
+				// Slider Images
+				allImg.push($(this).attr('data-src'));
+
+				// Alts
+				if($(this).attr('data-alt'))
+					allAlt.push($(this).attr('data-alt'));
+				else
+					allAlt.push('');
+				if($(this).attr('data-alt-thumb'))
+					allThumbAlt.push($(this).attr('data-alt-thumb'));
+				else
+					allThumbAlt.push('');
+
+				// Link URLs
+				if ($(this).attr('data-link'))
+					allLinks.push($(this).attr('data-link'));
+				else
+					allLinks.push('');
+
+				// URL Target
+				if ($(this).attr('data-target'))
+					allTargets.push($(this).attr('data-target'));
+				else
+					allTargets.push('');
+
+				// Crop images
+				if ($(this).attr('data-portrait'))
+					allPor.push($(this).attr('data-portrait'));
+				else
+					allPor.push('');
+
+				// Alignment
+				if ($(this).attr('data-alignment'))
+					allAlign.push($(this).attr('data-alignment'));
+				else
+					allAlign.push('');
+
+				// Thumbnail Images
+				if ($(this).attr('data-thumb'))
+					allThumbs.push($(this).attr('data-thumb'));
+				else
+					allThumbs.push('');
+			} else
+				globalContent = $(this);
 		});
 
 		var amountSlide = allImg.length;
 
 		$(content).append('<div class="cameraContents"></div>');
+		$('.cameraContents', content).append('<div class="cameraGlobal">' + globalContent.html() + '</div>');
 		var loopMove;
 		for (loopMove = 0; loopMove < amountSlide; loopMove++) {
 			$('.cameraContents', content).append('<div class="cameraContent"></div>');
@@ -963,10 +957,9 @@
 				$('> div', thumbs).append('<ul></ul>');
 
 				$.each(allThumbs, function (i, val) {
-					if ($('> div', elem).eq(i).attr('data-thumb') !== '') {
-						thumbUrl = $('> div', elem).eq(i).attr('data-thumb');
+					if(val) {
 						var newImg = new Image();
-						newImg.src = thumbUrl;
+						newImg.src = val;
 
 						if(allThumbAlt[i])
 							newImg.alt = allThumbAlt[i];
@@ -976,18 +969,28 @@
 					}
 				});
 			} else {
-				$.each(allThumbs, function (i, val) {
-					if ($('> div', elem).eq(i).attr('data-thumb') !== '') {
-						thumbUrl = $('> div', elem).eq(i).attr('data-thumb');
-						var newImg = new Image();
-						newImg.src = thumbUrl;
+				$('> div', elem).each(function (i, val) {
+					if(! $(this).hasClass('camera_global_content')) {
+						if ($('> div', elem).eq(i).attr('data-thumb') !== '') {
+							thumbUrl = $('> div', elem).eq(i).attr('data-thumb');
+							var newImg = new Image();
+							newImg.src = thumbUrl;
 
-						if(allThumbAlt[i])
-							newImg.alt = allThumbAlt[i];
+							// Get alt
+							var n = null;
+							$.each(allThumbs, function (i, val) {
+								if(val === thumbUrl) {
+									n = i;
+									return false;
+								}
+							});
+							if(allThumbAlt[n])
+								newImg.alt = allThumbAlt[n];
 
-						$('li.pag_nav_' + i, pagination).append($(newImg).attr('class', 'camera_thumb').css({'position': 'absolute'}).animate({opacity: 0}, 0));
-						$('li.pag_nav_' + i + ' > img', pagination).after('<div class="thumb_arrow"></div>');
-						$('li.pag_nav_' + i + ' > .thumb_arrow', pagination).animate({opacity: 0}, 0);
+							$('li.pag_nav_' + i, pagination).append($(newImg).attr('class', 'camera_thumb').css({'position': 'absolute'}).animate({opacity: 0}, 0));
+							$('li.pag_nav_' + i + ' > img', pagination).after('<div class="thumb_arrow"></div>');
+							$('li.pag_nav_' + i + ' > .thumb_arrow', pagination).animate({opacity: 0}, 0);
+						}
 					}
 				});
 
