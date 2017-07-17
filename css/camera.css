@@ -291,7 +291,7 @@
 .camera_wrap .camera_pag .camera_pag_ul li.cameracurrent > span {
 	-moz-box-shadow: 0;
 	-webkit-box-shadow: 0;
-	box-shadow: 0;
+	box-shadow: none;
 }
 
 .camera_pag_ul li img {
