@@ -219,9 +219,11 @@
 		var allPor = [];
 		var allAlign = [];
 		var allThumbs = [];
+		var allContent = {};
 		var globalContent = null;
 		var globalContentContainer = null;
 
+		var sliderI = 0;
 		$('> div', elem).each(function () {
 			if(! $(this).hasClass('camera_global_content')) {
 				// Slider Images
@@ -266,6 +268,14 @@
 					allThumbs.push($(this).attr('data-thumb'));
 				else
 					allThumbs.push('');
+
+				// Handle Caption
+				var caption = $('.camera_caption', $(this));
+
+				if(caption !== null && caption !== undefined && caption.length > 0)
+					allContent[sliderI] = caption;
+
+				sliderI++;
 			} else
 				globalContent = $(this);
 		});
@@ -295,12 +305,17 @@
 			}
 
 		}
-		$('.camera_caption', wrap).each(function () {
-			var ind = $(this).parent().index();
-			var cont = wrap.find('.cameraContent').eq(ind);
 
-			$(this).appendTo(cont);
-		});
+		// Add content to the correct slider
+		for(var n = 0; n < allImg.length; n++) {
+			var sliderContent = allContent[n];
+
+			if(sliderContent !== undefined && sliderContent !== null) {
+				var cont = wrap.find('.cameraContent').eq(n);
+
+				sliderContent.appendTo(cont);
+			}
+		}
 
 		target.append('<div class="cameraCont"></div>');
 		var cameraCont = $('.cameraCont', wrap);
@@ -887,7 +902,7 @@
 		} else {
 			pieContainer.append('<canvas id="' + pieID + '"></canvas>');
 			canvas = document.getElementById(pieID);
-			// todo check if px has to removed or if it is ok
+
 			canvas.setAttribute("width", opts.pieDiameter + 'px');
 			canvas.setAttribute("height", opts.pieDiameter + 'px');
 
